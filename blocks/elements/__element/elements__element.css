@@ -1,0 +1,7 @@
+.elements__element {
+    border-radius: 10px;
+    background-color: white;
+    box-sizing: content-box;
+    max-width: 282px;
+    height: 360px;
+}

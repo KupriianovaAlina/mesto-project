@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+  </head>
+
+  <body class="body">
+    <header class="header">
+      <img class="header__logo" src="./images/logo.svg" />
+    </header>
+
+    <main class="main">
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/profile.jpg"
+          alt="аватар пользователя"
+        />
+        <div class="profile__info">
+          <div class="profile__name-edit">
+            <p class="profile__name">Жак-Ив Кусто</p>
+            <a href="#" class="profile__edit-link"
+              ><img src="./images/Edit Button.svg"
+            /></a>
+          </div>
+          <p class="profile__occupation">Исследователь океана</p>
+        </div>
+        <a class="profile__button" href="#">
+          <img src="./images/plus.png" />
+        </a>
+      </section>
+
+      <section class="elements">
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/sinagakure.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Сунагакурэ</p>
+            <a
+              class="elements__icon-like elements__icon-like_active"
+              href="#"
+            ></a>
+          </div>
+        </div>
+
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/hram-bidju.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Храм Биджу</p>
+            <a class="elements__icon-like" href="#"></a>
+          </div>
+        </div>
+
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/konoha.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Коноха</p>
+            <a class="elements__icon-like" href="#"></a>
+          </div>
+        </div>
+
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/Sora-ku.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Сора Ку</p>
+            <a class="elements__icon-like" href="#"></a>
+          </div>
+        </div>
+
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/dolina-zavershenia.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Долина Завершения</p>
+            <a class="elements__icon-like" href="#"></a>
+          </div>
+        </div>
+
+        <div class="elements__element">
+          <img class="elements__photo" src="./images/derevna-tumana.jpg" />
+          <div class="elements__info">
+            <p class="elements__place">Деревня Тумана</p>
+            <a class="elements__icon-like elements__icon-like" href="#"></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="popup">
+      <div class="popup__container">
+        <img class="popup__close-icon" src="./images/Close Icon.svg" />
+        <div class="popup__form-window">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="popup__form">
+            <input class="popup__form-field" type="text" />
+            <input class="popup__form-field" type="text" />
+          </form>
+          <button class="popup__button" type="submit">Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p class="footer__copyrights">© 2020 Mesto Russia</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+.elements {
+  display: grid;
+  grid-row-gap: 20px;
+  padding-top: 50px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 17px;
+}
+
+@media (max-width: 900px) {
+  .elements {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .elements {
+    padding-top: 36px;
+    grid-template-columns: 1fr;
+  }
+}

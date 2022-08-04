@@ -1,0 +1,9 @@
+.elements__icon-like {
+  height: 19px;
+  width: 22px;
+  background-image: url(../../../images/heart.svg);
+}
+
+.elements__icon-like:hover {
+  opacity: 60%;
+}

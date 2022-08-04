@@ -1,0 +1,12 @@
+.profile__edit-link:hover {
+  opacity: 60%;
+  width: 32px;
+  height: 32px;
+}
+
+@media (max-width: 900px) {
+  .profile__edit-link {
+    width: 18px;
+    height: 18px;
+  }
+}

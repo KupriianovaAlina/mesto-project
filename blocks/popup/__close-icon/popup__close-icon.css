@@ -1,0 +1,16 @@
+.popup__close-icon {
+  width: 32px;
+  height: 32px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+@media (max-width: 500px) {
+  .popup__close-icon {
+    width: 20px;
+    height: 20px;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+  }
+}

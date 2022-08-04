@@ -1,0 +1,14 @@
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-left: 30px;
+}
+
+@media (max-width: 900px) {
+  .profile__info {
+    padding-left: 0;
+    padding-top: 26px;
+  }
+}
+
