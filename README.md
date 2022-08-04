@@ -5,4 +5,4 @@
 Языки: html, CSS. 
 Использованные технологии: адаптивная верстка (grid и медиазапросы), flexbox, формы. JS отсутствует.
 
-Вы также можете открыть этот сайт на GitPages: 
+Вы также можете открыть этот сайт на GitPages: https://kupriianovaalina.github.io/mesto-project/
