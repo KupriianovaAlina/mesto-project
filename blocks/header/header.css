@@ -1,6 +1,7 @@
 .header {
-  border-bottom: solid #545454 1px;
-  width: 880px;
+  border-bottom: solid rgba(84, 84, 84, 0.7) 1px;
+  width: 100%;
+  max-width: 880px;
   padding-top: 45px;
   padding-bottom: 38px;
 }

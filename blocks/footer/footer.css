@@ -1,8 +1,10 @@
 .footer {
-  width: 880px;
+  width: 100%;
+  max-width: 880px;
   padding-top: 66px;
   box-sizing: border-box;
   padding-bottom: 60px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1280px) {
@@ -13,6 +15,7 @@
 
 @media (max-width: 900px) {
   .footer {
+    padding-top: 48px;
     padding-left: 19px;
     width: 100%;
     padding-bottom: 36px;
