@@ -20,7 +20,7 @@
   }
 }
 
-.popup__button:hover {
+.popup__close-button:hover {
   opacity: 60%;
   cursor: pointer;
 }
