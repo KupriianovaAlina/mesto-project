@@ -3,4 +3,6 @@
   background-color: white;
   box-sizing: content-box;
   max-width: 282px;
+  height: 361px;
+  position: relative;
 }

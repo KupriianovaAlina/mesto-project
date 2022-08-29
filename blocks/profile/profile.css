@@ -2,12 +2,12 @@
   padding-top: 40px;
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 880px;
+  width: 880px;
 }
 
 @media (max-width: 900px) {
   .profile {
+    width: 100%;
     padding-top: 42px;
     flex-direction: column;
   }
