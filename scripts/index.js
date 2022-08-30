@@ -16,7 +16,6 @@ const elementsSection = document.querySelector(".elements");
 const inputCard = document.querySelector('input[name="card"]');
 const inputLink = document.querySelector('input[name="link"]');
 const cardWindow = document.querySelector("#photo-window");
-
 const initialCards = [
   {
     name: "Архыз",
@@ -44,12 +43,17 @@ const initialCards = [
   },
 ];
 
+// функция открытия модального окна
+function openModal(element) {
+  element.classList.add("popup_opened");
+}
+
 function openCard(name, link) {
   cardWindow.querySelector(".photo-window__title").textContent = name;
   cardWindow.querySelector(".photo-window__title").alt = name;
   cardWindow.querySelector(".photo-window__img").src = link;
 
-  cardWindow.classList.add("popup_opened");
+  openModal(cardWindow);
 
   closeButtonCardWindow.addEventListener("click", function () {
     cardWindow.classList.remove("popup_opened");
@@ -92,7 +96,7 @@ initialCards.forEach(addCard);
 
 // открываем модалку редактирования
 editButton.addEventListener("click", function () {
-  popupEditProfile.classList.add("popup_opened");
+  openModal(popupEditProfile);
 
   // подгружаем данные из профиля в форму
   inputName.value = profileName.textContent;
@@ -116,7 +120,7 @@ closeButtonProfile.addEventListener("click", function () {
 
 // открываем модалку добавления карточки
 addButton.addEventListener("click", function () {
-  popupAddCard.classList.add("popup_opened");
+  openModal(popupAddCard);
 });
 
 // Обработчик «отправки» формы добавления карточки
