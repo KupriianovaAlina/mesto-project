@@ -1,3 +1,5 @@
+import '../pages/index.css';
+
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const popupEditProfile = document.querySelector("#popup-edit-profile");
@@ -58,7 +60,7 @@ function openCard(name, link) {
   cardWindow.querySelector(".photo-window__title").textContent = name;
   cardWindow.querySelector(".photo-window__title").alt = name;
   cardWindow.querySelector(".photo-window__img").src = link;
-  
+
   openModal(cardWindow);
 }
 
