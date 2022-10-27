@@ -40,10 +40,16 @@
   <div class="popup" id="popup-edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="info">
-        <input class="popup__form-field" type="text" name="name" placeholder="Жак Ив-Кусто" />
-        <input class="popup__form-field" type="text" name="occupation" placeholder="Исследователь океана" />
-        <button class="popup__save-button" type="submit" value="submit">
+      <form class="popup__form" name="info" novalidate>
+        <input class="popup__input" name="name" placeholder="Имя" minlength="2" maxlength="40" required
+          data-custom-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          data-regex="true" />
+        <span class="popup__error name-error"></span>
+        <input class="popup__input" name="occupation" placeholder="О себе" minlength="2" maxlength="200" required
+          data-custom-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          data-regex="true" />
+        <span class="popup__error occupation-error"></span>
+        <button class="popup__button" type="submit" value="submit" disabled>
           Сохранить
         </button>
       </form>
@@ -55,9 +61,13 @@
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="card">
-        <input class="popup__form-field" type="text" name="card" placeholder="Название" />
-        <input class="popup__form-field" type="text" name="link" placeholder="Ссылка на картинку" />
-        <button class="popup__save-button" type="submit" value="submit">
+        <input class="popup__input" name="card" placeholder="Название" minlength="2" maxlength="30" required
+          data-custom-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          data-regex="true" />
+        <span class="popup__error card-error"></span>
+        <input class="popup__input" type="url" name="link" placeholder="Ссылка на картинку" required />
+        <span class="popup__error link-error"></span>
+        <button class="popup__button popup__button_disabled" type="submit" value="submit">
           Сохранить
         </button>
       </form>

@@ -1,4 +1,4 @@
-.popup__save-button {
+.popup__button {
   width: 100%;
   background-color: black;
   border-radius: 2px;
@@ -13,13 +13,13 @@
 }
 
 @media (max-width: 600px) {
-  .popup__save-button {
+  .popup__button {
     margin-top: 45px;
     font-size: 14px;
   }
 }
 
-.popup__save-button:hover {
+.popup__button:hover {
   background-color: rgb(0, 0, 0, 0.8);
   cursor: pointer;
 }

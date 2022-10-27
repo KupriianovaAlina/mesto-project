@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import './index.css';
 
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
@@ -45,14 +45,13 @@ const initialCards = [
   },
 ];
 
+import { isValid, toggleButtonState } from "./components/validate";
+
 // функция открытия любого модального окна
 function openModal(element) {
   element.classList.add("popup_opened");
-}
 
-// функция закрытия любого модального окна
-function closeModal(element) {
-  element.classList.remove("popup_opened");
+  setEscEventListenerOnPopup(element);
 }
 
 // функция открытия модального окна с фотографией
@@ -137,6 +136,11 @@ editButton.addEventListener("click", function () {
   // подгружаем данные из профиля в форму
   inputName.value = profileName.textContent;
   inputOccupation.value = profileOccupation.textContent;
+
+  isValid(formInfo, inputName);
+  isValid(formInfo, inputOccupation);
+
+  toggleButtonState([inputName, inputOccupation], popupEditProfile.querySelector(".popup__button"));
 });
 
 formInfo.addEventListener("submit", formSubmitHandlerProfile);
@@ -157,3 +161,43 @@ formCard.addEventListener("submit", profileFormSubmitHandler);
 closeButtonCard.addEventListener("click", function () {
   closeModal(popupAddCard);
 });
+
+import { enableValidation } from "./components/validate.js";
+
+enableValidation();
+
+// функция закрытия любого модального окна
+function closeModal(element) {
+  element.classList.remove("popup_opened");
+}
+
+function setEventListenerOnPopup(popup) {
+  popup.addEventListener('click', (event) => {
+    if (!event.target.closest('.popup__container'))
+      closeModal(popup);
+  });
+
+}
+
+function enablePopupToClose() {
+  const popupList = Array.from(document.querySelectorAll(".popup"));
+
+  popupList.forEach((popup) => {
+    setEventListenerOnPopup(popup);
+  });
+}
+
+// import { enablePopupToClose } from "./components/modal.js";
+enablePopupToClose();
+
+// функция, навешивающая отслеживание нажатия Esc при открытии модального окна
+function setEscEventListenerOnPopup(popup) {
+
+  document.addEventListener("keydown", (evt) => {
+
+    // Если пользователь нажал Esc
+    if (evt.key === "Escape") closeModal(popup);
+
+  });
+
+}
