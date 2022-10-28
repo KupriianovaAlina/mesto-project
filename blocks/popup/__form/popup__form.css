@@ -1,9 +1,6 @@
 .popup__form {
-  padding-top: 24px;
-}
-
-@media (max-width: 600px) {
-  .popup__form {
-    padding-top: 45px;
-  }
+  padding-top: 30px;
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
 }

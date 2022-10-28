@@ -3,4 +3,11 @@
     line-height: 15px;
     color: #FF0000;
     visibility: hidden;
+    min-height: 30px;
+}
+
+@media (max-width:767px) {
+    .popup__error {
+        min-height: 45px;
+    }
 }

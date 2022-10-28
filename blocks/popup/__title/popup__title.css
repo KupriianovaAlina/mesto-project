@@ -4,6 +4,7 @@
   line-height: 1.2;
   color: #000000;
   margin: 0;
+  grid-area: title;
 }
 
 @media (max-width: 600px) {

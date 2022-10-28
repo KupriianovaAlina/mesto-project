@@ -1,135 +1,45 @@
 import './index.css';
 
-const editButton = document.querySelector(".profile__edit-button");
-const addButton = document.querySelector(".profile__add-button");
-const popupEditProfile = document.querySelector("#popup-edit-profile");
-const popupAddCard = document.querySelector("#popup-add-card");
-const closeButtonProfile = document.querySelector("#close-button-profile");
-const closeButtonCard = document.querySelector("#close-button-card");
-const closeButtonCardWindow = document.querySelector("#close-button-img");
-const profileName = document.querySelector(".profile__name");
-const profileOccupation = document.querySelector(".profile__occupation");
-const inputName = document.querySelector('input[name="name"]');
-const inputOccupation = document.querySelector('input[name="occupation"]');
-const formInfo = document.querySelector('form[name="info"]');
-const formCard = document.querySelector('form[name="card"]');
-const elementTemplate = document.querySelector("#element").content;
-const elementsSection = document.querySelector(".elements");
-const inputCard = document.querySelector('input[name="card"]');
-const inputLink = document.querySelector('input[name="link"]');
-const cardWindow = document.querySelector("#photo-window");
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+import { popupEditProfile } from "./components/constants.js"
+import { closeButtonCardWindow } from "./components/constants.js"
+import { cardWindow } from "./components/constants.js"
+import { closeButtonCard } from "./components/constants.js"
+import { closeButtonProfile } from "./components/constants.js"
+import { popupAddCard } from "./components/constants.js"
+import { closeModal } from "./components/modal.js"
 
-import { isValid, toggleButtonState } from "./components/validate";
-
-// функция открытия любого модального окна
-function openModal(element) {
-  element.classList.add("popup_opened");
-
-  setEscEventListenerOnPopup(element);
-}
-
-// функция открытия модального окна с фотографией
-function openCard(name, link) {
-  cardWindow.querySelector(".photo-window__title").textContent = name;
-  cardWindow.querySelector(".photo-window__title").alt = name;
-  cardWindow.querySelector(".photo-window__img").src = link;
-
-  openModal(cardWindow);
-}
-
-// функция добавления карточки места на страницу
-function createCard(data) {
-  // клонируем содержимое тега template
-  const elementCard = elementTemplate.querySelector(".element").cloneNode(true);
-  const likeButton = elementCard.querySelector(".element__like-button");
-  const deleteButton = elementCard.querySelector(".element__delete-button");
-  const elementPhoto = elementCard.querySelector(".element__photo");
-  const elementPlace = elementCard.querySelector(".element__place");
-
-  // наполняем карточку содержимым
-  elementPlace.textContent = data.name;
-  elementPhoto.src = data.link;
-  elementPhoto.alt = data.name;
-
-  // делаем кликабельными лайк карточки
-  likeButton.addEventListener("click", function () {
-    likeButton.classList.toggle("element__like-button_active");
-  });
-
-  // делаем рабочей кнопку удалить
-  deleteButton.addEventListener("click", function (evt) {
-    evt.target.closest(".element").remove();
-  });
-
-  // делаем возможным открыть карточку в отдельной модалке
-  elementPhoto.addEventListener("click", function () {
-    openCard(elementPlace.textContent, elementPhoto.src);
-  });
-
-  return elementCard;
-}
-
-// функция добавления карточки на страницу
-function renderCard(data) {
-  elementsSection.prepend(createCard(data));
-}
-
-// функция-обработчик «отправки» формы редактирования
-function formSubmitHandlerProfile(evt) {
-  evt.preventDefault();
-  profileName.textContent = inputName.value;
-  profileOccupation.textContent = inputOccupation.value;
+// навешиваем на кнопку закрытия модалки редактирования слушатель клика
+closeButtonProfile.addEventListener("click", function () {
   closeModal(popupEditProfile);
-}
+});
 
-// функция-обработчик «отправки» формы добавления карточки
-function profileFormSubmitHandler(evt) {
-  evt.preventDefault();
-  closeModal(popupAddCard);
-
-  if (inputCard.value && inputLink.value) {
-    const info = { name: inputCard.value, link: inputLink.value };
-    renderCard(info);
-  }
-
-  evt.target.reset();
-}
-
-// вешаем listener на кнопку закрытия модального окна с фотографией
+// навешиваем на кнопку закрытия модалки с фотографией слушатель клика
 closeButtonCardWindow.addEventListener("click", function () {
   closeModal(cardWindow);
 });
 
-// добавляем 6 карточек на страницу по умолчанию
-initialCards.forEach(renderCard);
+// навешиваем на кнопку закрытия модалки карточек слушатель клика
+closeButtonCard.addEventListener("click", function () {
+  closeModal(popupAddCard);
+});
 
-// открываем модалку редактирования
+import { addButton } from "./components/constants.js";
+import { openModal } from "./components/modal.js";
+
+// навешиваем на кнопку добавления карточки слушатель клика
+addButton.addEventListener("click", function () {
+  openModal(popupAddCard);
+});
+
+import { inputName } from "./components/constants.js";
+import { inputOccupation } from "./components/constants.js";
+import { profileName } from "./components/constants.js";
+import { profileOccupation } from "./components/constants.js";
+import { formInfo } from "./components/constants.js";
+import { editButton } from "./components/constants.js";
+import { isValid, toggleButtonState } from "./components/validate.js";
+
+// навешиваем на кнопку редактирования профиля слушатель клика
 editButton.addEventListener("click", function () {
   openModal(popupEditProfile);
 
@@ -143,61 +53,27 @@ editButton.addEventListener("click", function () {
   toggleButtonState([inputName, inputOccupation], popupEditProfile.querySelector(".popup__button"));
 });
 
+import { initialCards } from "./components/constants.js";
+import { renderCard } from "./components/card.js";
+
+// добавляем 6 карточек на страницу по умолчанию
+initialCards.forEach(renderCard);
+
+import { formCard } from "./components/constants.js";
+import { formSubmitHandlerProfile, profileFormSubmitHandler } from "./components/modal.js";
+
+// добавляем слушатели submit на формы и отменяем автоматическую перезагрузку страницы
 formInfo.addEventListener("submit", formSubmitHandlerProfile);
-
-// закрываем модалку редактирования
-closeButtonProfile.addEventListener("click", function () {
-  closeModal(popupEditProfile);
-});
-
-// открываем модалку добавления карточки
-addButton.addEventListener("click", function () {
-  openModal(popupAddCard);
-});
-
 formCard.addEventListener("submit", profileFormSubmitHandler);
 
-// закрываем модалку добавления карточки
-closeButtonCard.addEventListener("click", function () {
-  closeModal(popupAddCard);
-});
+
+import { enablePopupToClose } from "./components/modal.js";
+
+// реализуем закрытие всех попапов при нажатии на оверлей
+enablePopupToClose();
+
 
 import { enableValidation } from "./components/validate.js";
 
+//валидируем все формы 
 enableValidation();
-
-// функция закрытия любого модального окна
-function closeModal(element) {
-  element.classList.remove("popup_opened");
-}
-
-function setEventListenerOnPopup(popup) {
-  popup.addEventListener('click', (event) => {
-    if (!event.target.closest('.popup__container'))
-      closeModal(popup);
-  });
-
-}
-
-function enablePopupToClose() {
-  const popupList = Array.from(document.querySelectorAll(".popup"));
-
-  popupList.forEach((popup) => {
-    setEventListenerOnPopup(popup);
-  });
-}
-
-// import { enablePopupToClose } from "./components/modal.js";
-enablePopupToClose();
-
-// функция, навешивающая отслеживание нажатия Esc при открытии модального окна
-function setEscEventListenerOnPopup(popup) {
-
-  document.addEventListener("keydown", (evt) => {
-
-    // Если пользователь нажал Esc
-    if (evt.key === "Escape") closeModal(popup);
-
-  });
-
-}
