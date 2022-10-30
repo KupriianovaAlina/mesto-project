@@ -8,39 +8,6 @@ import { closeModal, openModal, enablePopupToClose } from "./components/modal.js
 import { createCard } from "./components/card";
 import { enableValidation } from "./components/validate.js";
 
-// навешиваем на кнопку закрытия модалки редактирования слушатель клика
-closeButtonProfile.addEventListener("click", function () {
-  closeModal(popupEditProfile);
-});
-
-// навешиваем на кнопку закрытия модалки с фотографией слушатель клика
-closeButtonCardWindow.addEventListener("click", function () {
-  closeModal(cardWindow);
-});
-
-// навешиваем на кнопку закрытия модалки карточек слушатель клика
-closeButtonCard.addEventListener("click", function () {
-  closeModal(popupAddCard);
-});
-
-// навешиваем на кнопку добавления карточки слушатель клика
-addButton.addEventListener("click", function () {
-  openModal(popupAddCard);
-});
-
-// навешиваем на кнопку редактирования профиля слушатель клика
-editButton.addEventListener("click", function () {
-  // подгружаем данные из профиля в форму
-  inputName.value = profileName.textContent;
-  inputOccupation.value = profileOccupation.textContent;
-
-  openModal(popupEditProfile);
-});
-
-// добавляем слушатели submit на формы и отменяем автоматическую перезагрузку страницы
-formInfo.addEventListener("submit", handleFormSubmitProfile);
-formCard.addEventListener("submit", handleProfileFormSubmit);
-
 // функция добавления карточки на страницу
 export function renderCard(data) {
   elementsSection.prepend(createCard(data));
@@ -76,6 +43,39 @@ export function handleProfileFormSubmit(evt) {
 
   evt.target.reset();
 }
+
+// навешиваем на кнопку закрытия модалки редактирования слушатель клика
+closeButtonProfile.addEventListener("click", function () {
+  closeModal(popupEditProfile);
+});
+
+// навешиваем на кнопку закрытия модалки с фотографией слушатель клика
+closeButtonCardWindow.addEventListener("click", function () {
+  closeModal(cardWindow);
+});
+
+// навешиваем на кнопку закрытия модалки карточек слушатель клика
+closeButtonCard.addEventListener("click", function () {
+  closeModal(popupAddCard);
+});
+
+// навешиваем на кнопку добавления карточки слушатель клика
+addButton.addEventListener("click", function () {
+  openModal(popupAddCard);
+});
+
+// навешиваем на кнопку редактирования профиля слушатель клика
+editButton.addEventListener("click", function () {
+  // подгружаем данные из профиля в форму
+  inputName.value = profileName.textContent;
+  inputOccupation.value = profileOccupation.textContent;
+
+  openModal(popupEditProfile);
+});
+
+// добавляем слушатели submit на формы и отменяем автоматическую перезагрузку страницы
+formInfo.addEventListener("submit", handleFormSubmitProfile);
+formCard.addEventListener("submit", handleProfileFormSubmit);
 
 // добавляем 6 карточек на страницу по умолчанию
 initialCards.forEach(renderCard);
