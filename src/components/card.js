@@ -1,7 +1,10 @@
-import { elementTemplate, elementsSection } from "./constants.js"
+import { elementTemplate } from "./constants.js"
+import { openCard } from "../index.js"
+import { isImage } from "./utils.js"
+import noPhoto from '../../images/no-photo.png';
 
 // функция добавления карточки места на страницу
-function createCard(data) {
+export function createCard(data) {
     // клонируем содержимое тега template
     const elementCard = elementTemplate.querySelector(".element").cloneNode(true);
     const likeButton = elementCard.querySelector(".element__like-button");
@@ -11,8 +14,14 @@ function createCard(data) {
 
     // наполняем карточку содержимым
     elementPlace.textContent = data.name;
-    elementPhoto.src = data.link;
     elementPhoto.alt = data.name;
+
+    // добовляем в карточку изображение (если есть, иначе фото-заглушку)
+    if (isImage(data.link)) {
+        elementPhoto.src = data.link
+    } else {
+        elementPhoto.src = noPhoto;
+    };
 
     // делаем кликабельными лайк карточки
     likeButton.addEventListener("click", function () {
@@ -31,9 +40,3 @@ function createCard(data) {
 
     return elementCard;
 }
-
-// функция добавления карточки на страницу
-export function renderCard(data) {
-    elementsSection.prepend(createCard(data));
-}
-

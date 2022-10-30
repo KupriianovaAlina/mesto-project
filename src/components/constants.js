@@ -30,6 +30,8 @@ export const elementsSection = document.querySelector(".elements");
 export const inputCard = document.querySelector('input[name="card"]');
 export const inputLink = document.querySelector('input[name="link"]');
 export const cardWindow = document.querySelector("#photo-window");
+export const cardWindowTitle = cardWindow.querySelector(".photo-window__title");
+export const cardWindowImg = cardWindow.querySelector(".photo-window__img");
 
 // данные для начальных 6 карточек
 export const initialCards = [
