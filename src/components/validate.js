@@ -1,4 +1,4 @@
-import { regex, formClasses as objOfClasses } from "./constants.js";
+import { regex } from "./constants.js";
 
 // Функция, которая добовляет класс с ошибкой
 function showInputError(formElement, inputElement, errorMessage, formClasses) {
@@ -79,29 +79,37 @@ export function enableValidation(formClasses) {
 };
 
 // блокируем кнопку модального окна
-export function disableButton(popup) {
-    const buttonElement = popup.querySelector('.popup__button');
-    console.log("блокируем кнопку");
-    console.log(buttonElement);
+export function disableButton(popup, formClasses) {
+    const buttonElement = popup.querySelector(`${formClasses.submitButtonSelector}`);
+
     // сделай кнопку неактивной
     buttonElement.disabled = true;
-    buttonElement.classList.add('popup__button_disabled');
+    buttonElement.classList.add(`${formClasses.inactiveButtonClass}`);
 }
 
 // разблокируем кнопку модального окна
-export function activateButton(popup) {
-    const buttonElement = popup.querySelector('.popup__button');
-    console.log("buttonElement");
+export function activateButton(popup, formClasses) {
+    const buttonElement = popup.querySelector(`${formClasses.submitButtonSelector}`);
+
     // сделай кнопку активной
     buttonElement.disabled = false;
-    buttonElement.classList.remove('popup__button_disabled');
+    buttonElement.classList.remove(`${formClasses.inactiveButtonClass}`);
 }
 
 // обнуляем в форме span'ы с ошибками от предыдущего заполнения
-export function erasePreviousErrors(popup) {
-    const inputList = Array.from(popup.querySelectorAll('.popup__input'));
+export function erasePreviousErrors(popup, formClasses) {
+    const inputList = Array.from(popup.querySelectorAll(`${formClasses.inputSelector}`));
 
     inputList.forEach((inputElement) => {
-        hideInputError(popup, inputElement, objOfClasses);
+        hideInputError(popup, inputElement, formClasses);
+    });
+}
+
+// обнуляем в форме input'ы от предыдущего заполнения
+export function erasePreviousInputs(popup, formClasses) {
+    const inputList = Array.from(popup.querySelectorAll(`${formClasses.inputSelector}`));
+
+    inputList.forEach((inputElement) => {
+        inputElement.value = "";
     });
 }

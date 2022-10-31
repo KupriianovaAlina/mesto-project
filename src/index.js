@@ -4,9 +4,9 @@ import {
   cardWindowTitle, cardWindowImg, inputCard, inputLink, addButton, inputName, inputOccupation, profileName,
   profileOccupation, formInfo, editButton, initialCards, elementsSection, formCard, formClasses
 } from "./components/constants.js"
-import { closeModal, openModal, enablePopupToClose } from "./components/modal.js"
+import { closeModal, openModal, enablePopupToClose, handleEscPress } from "./components/modal.js"
 import { createCard } from "./components/card";
-import { enableValidation } from "./components/validate.js";
+import { enableValidation, erasePreviousErrors, activateButton, disableButton, erasePreviousInputs } from "./components/validate.js";
 
 // функция добавления карточки на страницу
 export function renderCard(data) {
@@ -44,6 +44,27 @@ export function handleProfileFormSubmit(evt) {
   evt.target.reset();
 }
 
+// функция-обработчик открытия модалки карточек
+function handleCardModalOpening() {
+  disableButton(popupAddCard, formClasses)
+  erasePreviousInputs(popupAddCard, formClasses)
+  openModal(popupAddCard);
+  document.addEventListener("keydown", handleEscPress);
+}
+
+// функция-обработчик открытия модалки редактирвоания профиля
+function handleProfileModalOpening() {
+  erasePreviousErrors(popupEditProfile, formClasses);
+  activateButton(popupEditProfile, formClasses);
+
+  // подгружаем данные из профиля в форму 
+  inputName.value = profileName.textContent;
+  inputOccupation.value = profileOccupation.textContent;
+
+  openModal(popupEditProfile);
+  document.addEventListener("keydown", handleEscPress);
+}
+
 // навешиваем на кнопку закрытия модалки редактирования слушатель клика
 closeButtonProfile.addEventListener("click", function () {
   closeModal(popupEditProfile);
@@ -60,18 +81,10 @@ closeButtonCard.addEventListener("click", function () {
 });
 
 // навешиваем на кнопку добавления карточки слушатель клика
-addButton.addEventListener("click", function () {
-  openModal(popupAddCard);
-});
+addButton.addEventListener("click", handleCardModalOpening);
 
 // навешиваем на кнопку редактирования профиля слушатель клика
-editButton.addEventListener("click", function () {
-  // подгружаем данные из профиля в форму
-  inputName.value = profileName.textContent;
-  inputOccupation.value = profileOccupation.textContent;
-
-  openModal(popupEditProfile);
-});
+editButton.addEventListener("click", handleProfileModalOpening);
 
 // добавляем слушатели submit на формы и отменяем автоматическую перезагрузку страницы
 formInfo.addEventListener("submit", handleFormSubmitProfile);
@@ -85,14 +98,3 @@ enablePopupToClose();
 
 //валидируем все формы 
 enableValidation(formClasses);
-
-// // разбираемся с сервером
-// fetch('https://nomoreparties.co/v1/plus-cohort-16/cards', {
-//   headers: {
-//     authorization: '90c506b7-d892-431a-a44c-210a32f77305'
-//   }
-// })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });
