@@ -1,8 +1,7 @@
-import { elementTemplate, popUpDeleteCard, submitButtonDelete } from "./constants.js"
-import { openCard, myId, initInitialCards } from "../index.js"
+import { elementTemplate } from "./constants.js"
+import { openCard, myId } from "../index.js"
 import { isImage } from "./utils.js"
-import noPhoto from '../../images/no-photo.png';
-import { closeModal, openModal } from "./modal.js";
+import noPhoto from '../images/no-photo.png';
 import { addLike, deleteLike, deleteCard } from "./api.js";
 
 // функция добавления карточки места на страницу
@@ -33,22 +32,24 @@ export function createCard(data) {
     // делаем кликабельными лайк карточки
     likeButton.addEventListener("click", function () {
 
-        if (data.likes.some(like => like._id == myId)) {
+        if (likeButton.classList.contains('element__like-button_active')) {
             deleteLike(data._id)
                 .then(() => {
-                    initInitialCards();
+                    numberOfLikes.textContent = Number(numberOfLikes.textContent) - 1;
+                    likeButton.classList.remove("element__like-button_active");
                 })
                 .catch((err) => {
                     console.log(err);
-                });
+                })
         } else {
             addLike(data._id)
                 .then(() => {
-                    initInitialCards();
+                    numberOfLikes.textContent = Number(numberOfLikes.textContent) + 1;
+                    likeButton.classList.add("element__like-button_active");
                 })
                 .catch((err) => {
                     console.log(err);
-                });
+                })
         }
 
     });
@@ -56,21 +57,13 @@ export function createCard(data) {
     if (data.owner._id === myId) {
         // делаем рабочей кнопку удалить
         deleteButton.addEventListener("click", function () {
-            openModal(popUpDeleteCard);
-
-            submitButtonDelete.addEventListener("click", function () {
-                deleteCard(data._id)
-                    .then(() => {
-                        closeModal(popUpDeleteCard);
-
-                        initInitialCards();
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            })
-
-
+            deleteCard(data._id)
+                .then(() => {
+                    deleteButton.closest('.element').remove()
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         });
     } else {
         deleteButton.classList.add("element__delete-button_hidden")

@@ -10,6 +10,7 @@ export function handleEscPress(event) {
 // функция открытия любого модального окна
 export function openModal(element) {
     element.classList.add("popup_opened");
+    document.addEventListener("keydown", handleEscPress);
 }
 
 // функция закрытия любого модального окна

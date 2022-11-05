@@ -13,11 +13,6 @@ import { isImage } from './components/utils.js';
 import noPhoto from '../images/no-photo.png';
 import { patchUser, uploadCard, updateAvatar, getProfile, getCards } from './components/api.js';
 
-// функция добавления карточки на страницу
-export function renderCard(data) {
-  elementsSection.prepend(createCard(data));
-}
-
 // функция открытия модального окна с фотографией
 export function openCard(name, link) {
   cardWindowTitle.textContent = name;
@@ -31,7 +26,7 @@ export function openCard(name, link) {
 export function handleFormSubmitProfile(evt) {
   evt.preventDefault();
 
-  editProfileSubmitButton.innerHTML = "Сохранение..."
+  editProfileSubmitButton.textContent = "Сохранение..."
 
   const body = JSON.stringify({
     name: inputName.value,
@@ -46,14 +41,15 @@ export function handleFormSubmitProfile(evt) {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => { editProfileSubmitButton.textContent = "Сохранить" })
 }
 
 // функция-обработчик «отправки» формы добавления карточки
 export function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
-  addCardButton.innerHTML = "Cохранение..."
+  addCardButton.textContent = "Сохранение..."
 
   if (inputCard.value && inputLink.value) {
     const info = { name: inputCard.value, link: inputLink.value };
@@ -65,13 +61,15 @@ export function handleCardFormSubmit(evt) {
     })
 
     uploadCard(body)
-      .then(() => {
-        initInitialCards();
+      .then((data) => {
+        elementsSection.prepend(createCard(data))
         closeModal(popupAddCard);
         evt.target.reset();
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => { addCardButton.textContent = "Сохранить" })
   }
 }
 
@@ -81,7 +79,6 @@ function handleCardModalOpening() {
   erasePreviousInputs(popupAddCard, formClasses)
   erasePreviousErrors(popupAddCard, formClasses)
   openModal(popupAddCard);
-  addCardButton.innerHTML = "Сохранить"
   document.addEventListener("keydown", handleEscPress);
 }
 
@@ -90,14 +87,11 @@ function handleProfileModalOpening() {
   erasePreviousErrors(popupEditProfile, formClasses);
   activateButton(popupEditProfile, formClasses);
 
-  editProfileSubmitButton.innerHTML = "Сохранить";
-
   // подгружаем данные из профиля в форму 
   inputName.value = profileName.textContent;
   inputOccupation.value = profileOccupation.textContent;
 
   openModal(popupEditProfile);
-  document.addEventListener("keydown", handleEscPress);
 }
 
 // навешиваем на кнопку закрытия модалки редактирования слушатель клика
@@ -129,14 +123,14 @@ closeButtonProfileImgModal.addEventListener("click", function () {
 changePhotoButton.addEventListener("click", function (evt) {
   let photo;
 
+  changePhotoButton.textContent = "Сохранение..."
+
   // если в строчке ссылка не на картинку или строчка пустая, мы берем вместо нового фото фото-заглушку
   if ((isImage(profileImgModalInput.value)) || (!profileImgModalInput.value)) {
     photo = profileImgModalInput.value;
   } else {
     photo = noPhoto;
   }
-
-  changePhotoButton.innerHTML = "Сохранение..."
 
   const body = JSON.stringify({
     avatar: photo
@@ -149,13 +143,13 @@ changePhotoButton.addEventListener("click", function (evt) {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => { changePhotoButton.textContent = "Сохранить" })
 })
 
 // навешиваем на аватар слушатель клика
 profileAvatar.addEventListener("click", function () {
   openModal(profileImgModal);
-  changePhotoButton.innerHTML = "Сохранить"
   profileImgModalInput.value = "";
 })
 
@@ -179,7 +173,6 @@ export let myId;
 
 // наполняем профиль данными с сервера
 function inItProfile() {
-
   getProfile()
     .then((info) => {
       profileName.textContent = info.name;
@@ -192,20 +185,19 @@ function inItProfile() {
     });
 }
 
-inItProfile();
-
-
 // подгружаем карточки дргуих студентов с сервера
-export function initInitialCards() {
+function initInitialCards() {
   getCards()
     .then((cardsList) => {
-      elementsSection.innerHTML = ''
-      cardsList.forEach(renderCard);
+      elementsSection.textContent = ''
+      cardsList.forEach((data) => elementsSection.append(createCard(data)));
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
+// Разная логика в then, поэтому не объединить в Promise.all
+inItProfile();
 initInitialCards();
 
