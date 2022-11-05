@@ -171,33 +171,17 @@ enableValidation(formClasses);
 
 export let myId;
 
-// наполняем профиль данными с сервера
-function inItProfile() {
-  getProfile()
-    .then((info) => {
-      profileName.textContent = info.name;
-      profileOccupation.textContent = info.about;
-      profileAvatarImg.src = info.avatar;
-      myId = info._id;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+Promise.all([getProfile(), getCards()])
+  .then(([userData, cards]) => {
+    profileName.textContent = userData.name;
+    profileOccupation.textContent = userData.about;
+    profileAvatarImg.src = userData.avatar;
+    myId = userData._id;
 
-// подгружаем карточки дргуих студентов с сервера
-function initInitialCards() {
-  getCards()
-    .then((cardsList) => {
-      elementsSection.textContent = ''
-      cardsList.forEach((data) => elementsSection.append(createCard(data)));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-// Разная логика в then, поэтому не объединить в Promise.all
-inItProfile();
-initInitialCards();
+    elementsSection.textContent = ''
+    cards.forEach((data) => elementsSection.append(createCard(data)));
+  })
+  .catch(err => {
+    console.log(err)
+  });
 
