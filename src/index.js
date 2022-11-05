@@ -10,7 +10,7 @@ import { closeModal, openModal, enablePopupToClose, handleEscPress } from "./com
 import { createCard } from "./components/card";
 import { enableValidation, erasePreviousErrors, activateButton, disableButton, erasePreviousInputs } from "./components/validate.js";
 import { isImage } from './components/utils.js';
-import noPhoto from '../images/no-photo.png';
+import noPhoto from './images/no-photo.png';
 import { patchUser, uploadCard, updateAvatar, getProfile, getCards } from './components/api.js';
 
 // функция открытия модального окна с фотографией
