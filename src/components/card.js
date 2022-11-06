@@ -34,8 +34,8 @@ export function createCard(data) {
 
         if (likeButton.classList.contains('element__like-button_active')) {
             deleteLike(data._id)
-                .then(() => {
-                    numberOfLikes.textContent = Number(numberOfLikes.textContent) - 1;
+                .then((res) => {
+                    numberOfLikes.textContent = res.likes.length;
                     likeButton.classList.remove("element__like-button_active");
                 })
                 .catch((err) => {
@@ -43,8 +43,8 @@ export function createCard(data) {
                 })
         } else {
             addLike(data._id)
-                .then(() => {
-                    numberOfLikes.textContent = Number(numberOfLikes.textContent) + 1;
+                .then((res) => {
+                    numberOfLikes.textContent = res.likes.length;
                     likeButton.classList.add("element__like-button_active");
                 })
                 .catch((err) => {

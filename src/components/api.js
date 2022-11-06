@@ -19,7 +19,7 @@ export function patchUser(params) {
     return fetch(`${config.baseUrl}users/me`, {
         method: 'PATCH',
         headers: config.headers,
-        body: params
+        body: JSON.stringify(params)
     }).then(checkRes);
 }
 
@@ -28,7 +28,7 @@ export function uploadCard(params) {
     return fetch(`${config.baseUrl}cards`, {
         method: 'POST',
         headers: config.headers,
-        body: params
+        body: JSON.stringify(params)
     }).then(checkRes);
 }
 
@@ -36,7 +36,7 @@ export function updateAvatar(params) {
     return fetch(`${config.baseUrl}users/me/avatar`, {
         method: 'PATCH',
         headers: config.headers,
-        body: params
+        body: JSON.stringify(params)
     }).then(checkRes);
 }
 

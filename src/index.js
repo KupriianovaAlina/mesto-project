@@ -2,11 +2,10 @@ import './index.css';
 import {
   popupEditProfile, closeButtonCardWindow, closeButtonCard, closeButtonProfile, popupAddCard, cardWindow,
   cardWindowTitle, cardWindowImg, inputCard, inputLink, addButton, inputName, inputOccupation, profileName,
-  profileOccupation, formInfo, editButton, elementsSection, formCard, formClasses, profileAvatar, closeButtonDeleteCard,
-  popUpDeleteCard, profileAvatarImg, profileImgModal, closeButtonProfileImgModal, changePhotoButton, profileImgModalInput,
+  profileOccupation, formInfo, editButton, elementsSection, formCard, formClasses, profileAvatar, profileAvatarImg, profileImgModal, closeButtonProfileImgModal, changePhotoButton, profileImgModalInput,
   addCardButton, editProfileSubmitButton
 } from "./components/constants.js"
-import { closeModal, openModal, enablePopupToClose, handleEscPress } from "./components/modal.js"
+import { closeModal, openModal, enablePopupToClose } from "./components/modal.js"
 import { createCard } from "./components/card";
 import { enableValidation, erasePreviousErrors, activateButton, disableButton, erasePreviousInputs } from "./components/validate.js";
 import { isImage } from './components/utils.js';
@@ -28,10 +27,10 @@ export function handleFormSubmitProfile(evt) {
 
   editProfileSubmitButton.textContent = "Сохранение..."
 
-  const body = JSON.stringify({
+  const body = {
     name: inputName.value,
     about: inputOccupation.value
-  })
+  }
 
   patchUser(body)
     .then(() => {
@@ -55,10 +54,10 @@ export function handleCardFormSubmit(evt) {
     const info = { name: inputCard.value, link: inputLink.value };
 
     // подгружаем карточку на сервер
-    const body = JSON.stringify({
+    const body = {
       name: inputCard.value,
       link: inputLink.value
-    })
+    }
 
     uploadCard(body)
       .then((data) => {
@@ -79,7 +78,6 @@ function handleCardModalOpening() {
   erasePreviousInputs(popupAddCard, formClasses)
   erasePreviousErrors(popupAddCard, formClasses)
   openModal(popupAddCard);
-  document.addEventListener("keydown", handleEscPress);
 }
 
 // функция-обработчик открытия модалки редактирвоания профиля
@@ -109,11 +107,6 @@ closeButtonCard.addEventListener("click", function () {
   closeModal(popupAddCard);
 });
 
-// навешиваем на кнопку закрытия модалки "вы уверены?" слушатель клика
-closeButtonDeleteCard.addEventListener("click", function () {
-  closeModal(popUpDeleteCard);
-});
-
 // навешиваем на кнопку закрытия модалки "обновить аватар" слушатель клика
 closeButtonProfileImgModal.addEventListener("click", function () {
   closeModal(profileImgModal);
@@ -121,6 +114,9 @@ closeButtonProfileImgModal.addEventListener("click", function () {
 
 // делаем кнопку сохранить модалки "обновить аватар" рабочей
 changePhotoButton.addEventListener("click", function (evt) {
+
+  evt.preventDefault();
+
   let photo;
 
   changePhotoButton.textContent = "Сохранение..."
@@ -132,13 +128,13 @@ changePhotoButton.addEventListener("click", function (evt) {
     photo = noPhoto;
   }
 
-  const body = JSON.stringify({
+  const body = {
     avatar: photo
-  })
+  }
 
   updateAvatar(body)
-    .then(() => {
-      inItProfile()
+    .then((res) => {
+      profileAvatarImg.src = res.avatar;
       closeModal(profileImgModal);
     })
     .catch((err) => {
@@ -149,8 +145,11 @@ changePhotoButton.addEventListener("click", function (evt) {
 
 // навешиваем на аватар слушатель клика
 profileAvatar.addEventListener("click", function () {
+  erasePreviousInputs(profileImgModal, formClasses);
+  erasePreviousErrors(profileImgModal, formClasses);
+  disableButton(profileImgModal, formClasses);
+
   openModal(profileImgModal);
-  profileImgModalInput.value = "";
 })
 
 // навешиваем на кнопку добавления карточки слушатель клика

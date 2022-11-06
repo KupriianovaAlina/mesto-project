@@ -1,5 +1,5 @@
 // функция, навешивающая отслеживание нажатия Esc при открытии модального окна
-export function handleEscPress(event) {
+function handleEscPress(event) {
     // Если пользователь нажал Esc
     if (event.key === "Escape") {
         const popup = document.querySelector('.popup_opened');
