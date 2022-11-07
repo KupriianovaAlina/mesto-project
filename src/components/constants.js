@@ -43,3 +43,5 @@ export const profileImgModal = document.querySelector("#popup-chage-photo");
 export const profileImgModalInput = profileImgModal.querySelector(".popup__input");
 export const closeButtonProfileImgModal = document.querySelector("#close-button-profile-img");
 export const changePhotoButton = document.querySelector("#button-change-photo");
+
+export const closeButtons = document.querySelectorAll(".popup__close-button");

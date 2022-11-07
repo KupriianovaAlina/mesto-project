@@ -1,8 +1,9 @@
-import { elementTemplate } from "./constants.js"
-import { openCard, myId } from "../index.js"
+import { elementTemplate, cardWindowTitle, cardWindowImg, cardWindow } from "./constants.js"
+import { myId } from "../index.js"
 import { isImage } from "./utils.js"
 import noPhoto from '../images/no-photo.png';
 import { addLike, deleteLike, deleteCard } from "./api.js";
+import { openModal } from "./modal.js";
 
 // функция добавления карточки места на страницу
 export function createCard(data) {
@@ -79,4 +80,14 @@ export function createCard(data) {
     numberOfLikes.textContent = (data.likes.length === 0) ? 0 : data.likes.length;
 
     return elementCard;
+}
+
+
+// функция открытия модального окна с фотографией
+function openCard(name, link) {
+    cardWindowTitle.textContent = name;
+    cardWindowTitle.alt = name;
+    cardWindowImg.src = link;
+
+    openModal(cardWindow);
 }

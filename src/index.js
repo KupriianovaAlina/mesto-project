@@ -1,9 +1,8 @@
 import './index.css';
 import {
-  popupEditProfile, closeButtonCardWindow, closeButtonCard, closeButtonProfile, popupAddCard, cardWindow,
-  cardWindowTitle, cardWindowImg, inputCard, inputLink, addButton, inputName, inputOccupation, profileName,
-  profileOccupation, formInfo, editButton, elementsSection, formCard, formClasses, profileAvatar, profileAvatarImg, profileImgModal, closeButtonProfileImgModal, changePhotoButton, profileImgModalInput,
-  addCardButton, editProfileSubmitButton
+  popupEditProfile, popupAddCard, cardWindow, inputCard, inputLink, addButton, inputName, inputOccupation, profileName,
+  profileOccupation, formInfo, editButton, elementsSection, formCard, formClasses, profileAvatar, profileAvatarImg, profileImgModal,
+  changePhotoButton, profileImgModalInput, addCardButton, editProfileSubmitButton, closeButtons
 } from "./components/constants.js"
 import { closeModal, openModal, enablePopupToClose } from "./components/modal.js"
 import { createCard } from "./components/card";
@@ -11,15 +10,6 @@ import { enableValidation, erasePreviousErrors, activateButton, disableButton, e
 import { isImage } from './components/utils.js';
 import noPhoto from './images/no-photo.png';
 import { patchUser, uploadCard, updateAvatar, getProfile, getCards } from './components/api.js';
-
-// функция открытия модального окна с фотографией
-export function openCard(name, link) {
-  cardWindowTitle.textContent = name;
-  cardWindowTitle.alt = name;
-  cardWindowImg.src = link;
-
-  openModal(cardWindow);
-}
 
 // функция-обработчик «отправки» формы редактирования
 export function handleFormSubmitProfile(evt) {
@@ -51,7 +41,6 @@ export function handleCardFormSubmit(evt) {
   addCardButton.textContent = "Сохранение..."
 
   if (inputCard.value && inputLink.value) {
-    const info = { name: inputCard.value, link: inputLink.value };
 
     // подгружаем карточку на сервер
     const body = {
@@ -92,28 +81,15 @@ function handleProfileModalOpening() {
   openModal(popupEditProfile);
 }
 
-// навешиваем на кнопку закрытия модалки редактирования слушатель клика
-closeButtonProfile.addEventListener("click", function () {
-  closeModal(popupEditProfile);
-});
-
-// навешиваем на кнопку закрытия модалки с фотографией слушатель клика
-closeButtonCardWindow.addEventListener("click", function () {
-  closeModal(cardWindow);
-});
-
-// навешиваем на кнопку закрытия модалки карточек слушатель клика
-closeButtonCard.addEventListener("click", function () {
-  closeModal(popupAddCard);
-});
-
-// навешиваем на кнопку закрытия модалки "обновить аватар" слушатель клика
-closeButtonProfileImgModal.addEventListener("click", function () {
-  closeModal(profileImgModal);
-});
+// реализуем закрытие попапов по клику на крестик закрытия
+closeButtons.forEach((closeButton) => {
+  closeButton.addEventListener("click", function (evt) {
+    closeModal(evt.target.closest(".popup"));
+  })
+})
 
 // делаем кнопку сохранить модалки "обновить аватар" рабочей
-changePhotoButton.addEventListener("click", function (evt) {
+profileImgModal.addEventListener("submit", function (evt) {
 
   evt.preventDefault();
 
@@ -177,7 +153,7 @@ Promise.all([getProfile(), getCards()])
     profileAvatarImg.src = userData.avatar;
     myId = userData._id;
 
-    elementsSection.textContent = ''
+    elementsSection.innerHTML = '';
     cards.forEach((data) => elementsSection.append(createCard(data)));
   })
   .catch(err => {
