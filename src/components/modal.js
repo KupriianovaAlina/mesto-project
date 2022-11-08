@@ -22,7 +22,7 @@ export function closeModal(element) {
 // функция, навешивающая слушатель клика на оверлей модального окна
 function setEventListenerOnPopup(popup) {
     popup.addEventListener('click', (event) => {
-        if (!event.target.closest('.popup__container'))
+        if (!event.target.closest('.popup__container') && !event.target.closest('.photo-window'))
             closeModal(popup);
     });
 }
